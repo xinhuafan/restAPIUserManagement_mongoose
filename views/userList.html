@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="w3.css">
+<div class="w3-container">
+<h3>Users</h3>
+<input type="text" ng-model="searchString" placeholder="Enter your search terms" size="180"/>
+<table class="w3-table w3-bordered w3-striped">
+  <tr>
+    <th>Edit</th>
+    <th ng-click="orderByMe('fName')">First Name</th>
+    <th ng-click="orderByMe('lName')">Last Name</th>
+    <th ng-click="orderByMe('sex')">Sex</th>
+    <th ng-click="orderByMe('age')">Age</th>
+    <th>Title</th>
+    <th>Delete</th>
+  </tr>
+  <tr ng-repeat="user in users | pagination: curPage * pageSize | limitTo: pageSize | orderBy: myOrderBy | searchFor:searchString">
+    <td>
+      <a ng-href="#/editUser/{{user._id}}"><button class="w3-btn w3-ripple">&#9998; Edit</button></a>
+    </td>
+    <td>{{ user.fName }}</td>
+    <td>{{ user.lName }}</td>
+    <td>{{ user.sex }}</td>
+    <td>{{ user.age }}</td>
+    <td>{{ user.title }}</td>
+    <td>
+      <button class="w3-btn w3-ripple" ng-click="deleteUser(user._id)">&#x2704; Delete</button>
+    </td>
+  </tr>
+</table>
+<br>
+<form class="center" ng-show="users.length"> 
+    <button type="button" class="btn btn-primary" ng-disabled="curPage == 0" ng-click="curPage=curPage-1"> &lt; PREV</button>
+    <span>Page {{curPage + 1}} of {{ numberOfPages() }}</span>
+    <button type="button" class="btn btn-primary" ng-disabled="curPage >= users.length/pageSize - 1" ng-click="curPage = curPage+1">NEXT &gt;</button>
+</form>
+<br><br>
+</div>
